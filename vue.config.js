@@ -8,6 +8,6 @@ module.exports = {
     }
   },
   devServer: {
-    proxy: 'http://www.apiokzy.com/'
+    proxy: 'https://www.apiokzy.com/'
   }
 }

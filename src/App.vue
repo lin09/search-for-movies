@@ -46,7 +46,7 @@
 
 <script>
 import axios from 'axios'
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '' : 'http://www.apiokzy.com/'
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '' : 'https://www.apiokzy.com/'
 
 export default {
   name: 'app',
