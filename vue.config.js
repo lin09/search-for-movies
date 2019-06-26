@@ -1,6 +1,6 @@
 module.exports = {
-  indexPath: '../index.html',
-  publicPath: process.env.NODE_ENV === 'production' ? 'search-for-movies/dist' : '/',
+  // indexPath: '../index.html',
+  publicPath: process.env.NODE_ENV === 'production' ? '/dist' : '/',
   configureWebpack: {
     externals: {
       'vue':'Vue',

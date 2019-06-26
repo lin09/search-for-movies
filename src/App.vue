@@ -5,6 +5,7 @@
     <form class="form" @submit.prevent="handleSubmit">
       <input type="text" v-model="wd" placeholder="请输入影视名">
       <button type="submit">搜索</button>
+      <div v-show="loading" class="loading"></div>
     </form>
 
     <div v-if="errorMsg" class="errorMsg">{{ errorMsg }}</div>
@@ -46,7 +47,7 @@
 
 <script>
 import axios from 'axios'
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '' : 'http://35.240.135.50/'
+// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '' : 'http://35.240.135.50/'
 
 export default {
   name: 'app',
@@ -54,7 +55,8 @@ export default {
     return {
       wd: '',
       errorMsg: '',
-      list: {}
+      list: {},
+      loading: false
     }
   },
   watch: {
@@ -64,13 +66,17 @@ export default {
   },
   methods: {
     handleSubmit () {
-      if (this.handleSubmit.loading) return
+      if (this.loading) return
+      if (this.wd === "") {
+        this.errorMsg = "请输入影视名"
+        return
+      }
 
       this.errorMsg = ''
       this.list = []
-      this.handleSubmit.loading = true
+      this.loading = true
 
-      axios.get('vodname/' + this.wd, { headers: { 'Access-Control-Allow-Origin': '*' } })
+      axios.get('/vodname/' + this.wd, { headers: { 'Access-Control-Allow-Origin': '*' } })
         .then(res => {
           res.data.data.forEach(item => {
             item.urls = item.vod_url.replace(/(^[\r\n\S]+m3u8\${3})|(\${3}[\r\n\S]+m3u8$)/, '')
@@ -79,13 +85,23 @@ export default {
           this.list = res.data
         })
         .catch(error => this.errorMsg = error)
-        .finally(() => this.handleSubmit.loading = false)
+        .finally(() => this.loading = false)
     }
   }
 }
 </script>
 
 <style>
+@keyframes turn
+{
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 * {
   margin: 0;
 }
@@ -114,11 +130,35 @@ button {
   margin: 20px;
 }
 .form {
+  position: relative;
   display: flex;
   width: 300px;
   margin: 0 auto 20px;
   height: 38px;
   box-shadow: 0 0 6px rgba(0,0,0,.4);
+}
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.4);
+}
+.loading::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  margin: auto;
+  width: 24px;
+  height: 24px;
+  border: 3px outset rgba(255,255,255,.8);
+  border-radius: 50%;
+  animation: turn 1s linear infinite;
 }
 .list-item {
   margin-bottom: 20px;
