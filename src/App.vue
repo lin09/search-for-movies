@@ -47,7 +47,9 @@
 
 <script>
 import axios from 'axios'
-// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '' : 'http://35.240.135.50/'
+import adaptive from '@lin09/adaptivejs'
+
+adaptive.run()
 
 export default {
   name: 'app',
@@ -76,7 +78,7 @@ export default {
       this.list = []
       this.loading = true
 
-      axios.get('/vodname/' + this.wd, { headers: { 'Access-Control-Allow-Origin': '*' } })
+      axios.get('/vodname/' + this.wd)
         .then(res => {
           res.data.data.forEach(item => {
             item.urls = item.vod_url.replace(/(^[\r\n\S]+m3u8\${3})|(\${3}[\r\n\S]+m3u8$)/, '')
@@ -105,6 +107,14 @@ export default {
 * {
   margin: 0;
 }
+body {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  margin: auto;
+  text-align: center;
+}
 img {
   width: 100%;
 }
@@ -113,18 +123,13 @@ input {
   border: 0;
   border-right: 1px solid rgba(0,0,0,.2);
   padding: 0 10px;
+  font-size: 16px;
 }
 button {
   border: 0;
+  padding: 0 20px;
   background: none;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: auto;
-  width: 1024px;
-  text-align: center;
+  font-size: 16px;
 }
 .title {
   margin: 20px;
@@ -132,9 +137,9 @@ button {
 .form {
   position: relative;
   display: flex;
-  width: 300px;
+  width: 400px;
   margin: 0 auto 20px;
-  height: 38px;
+  height: 56px;
   box-shadow: 0 0 6px rgba(0,0,0,.4);
 }
 .loading {
@@ -159,6 +164,9 @@ button {
   border: 3px outset rgba(255,255,255,.8);
   border-radius: 50%;
   animation: turn 1s linear infinite;
+}
+.result {
+  padding: 10px;
 }
 .list-item {
   margin-bottom: 20px;
@@ -195,6 +203,7 @@ button {
   flex-wrap: wrap;
 }
 .vod-url {
-  margin: 10px;
+  margin: 3px;
+  padding: 7px;
 }
 </style>

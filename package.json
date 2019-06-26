@@ -8,7 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@lin09/adaptivejs": "^1.0.1",
     "core-js": "^2.6.5",
+    "postcss-pxtorem": "^4.0.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -37,6 +39,9 @@
   },
   "postcss": {
     "plugins": {
+      "postcss-pxtorem": {
+        "propList": ["*"]
+      },
       "autoprefixer": {}
     }
   },
