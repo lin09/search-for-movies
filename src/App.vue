@@ -46,7 +46,7 @@
 
 <script>
 import axios from 'axios'
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '' : 'https://www.apiokzy.com/'
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '' : 'http://35.240.135.50/'
 
 export default {
   name: 'app',
@@ -70,7 +70,7 @@ export default {
       this.list = []
       this.handleSubmit.loading = true
 
-      axios.get('inc/feifei3s/?wd=' + this.wd, { headers: { 'Access-Control-Allow-Origin': '*' } })
+      axios.get('vodname/' + this.wd, { headers: { 'Access-Control-Allow-Origin': '*' } })
         .then(res => {
           res.data.data.forEach(item => {
             item.urls = item.vod_url.replace(/(^[\r\n\S]+m3u8\${3})|(\${3}[\r\n\S]+m3u8$)/, '')
